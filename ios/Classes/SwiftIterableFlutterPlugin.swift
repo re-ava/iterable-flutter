@@ -79,6 +79,7 @@ public class SwiftIterableFlutterPlugin: NSObject, FlutterPlugin, UNUserNotifica
         config.autoPushRegistration = true
         config.customActionDelegate = self
         config.urlDelegate = self
+        config.inAppDelegate = CustomInAppDelegate()
         
         IterableAPI.initialize(apiKey: apiKey, config: config)
     }
@@ -154,4 +155,10 @@ public class SwiftIterableFlutterPlugin: NSObject, FlutterPlugin, UNUserNotifica
         
     }
     
+}
+
+class CustomInAppDelegate: IterableInAppDelegate {
+    func onNew(message: IterableInAppMessage) -> InAppShowResponse {
+        return .skip
+    }
 }
