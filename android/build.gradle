@@ -2,14 +2,14 @@ group 'com.lahaus.iterable_flutter'
 version '0.5.7'
 
 buildscript {
-    ext.kotlin_version = '1.8.10'
+    ext.kotlin_version = '1.9.20'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'com.android.tools.build:gradle:8.7.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -17,7 +17,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
@@ -25,13 +25,25 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 34
-    compileSdkVersion 34
+    if(project.hasProperty("android") && project.android.hasProperty("namespace")){
+        namespace = "com.lahaus.iterable_flutter"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     defaultConfig {
+        compileSdk 34
         minSdkVersion 21
     }
 
@@ -45,5 +57,5 @@ dependencies {
 
     implementation 'com.iterable:iterableapi:3.5.3'
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.json:json:20210307'
+    testImplementation 'org.json:json:20231013'
 }
